@@ -27,7 +27,36 @@ function Register(props) {
     const [token, setToken] = useState();
 
     function addnewUserToApi(newUser) {
-        console.log(newUser);
+
+        if(!username){
+            document.getElementById('lbltipAddedComment').innerHTML = 'Username is a required field';
+            return;
+        }
+        if(!flagValidEmail){
+            document.getElementById('lbltipAddedComment').innerHTML = validEmail
+            return;
+        }
+        if(!email){
+            document.getElementById('lbltipAddedComment').innerHTML = 'Email is a required field';
+            return;
+        }
+        if(!flagValidPassword){
+            document.getElementById('lbltipAddedComment').innerHTML = validPassword
+            return;
+        }
+        if(!password){
+            document.getElementById('lbltipAddedComment').innerHTML = 'password is a required field';
+            return;
+        }
+        if(!flagValidConfirmPassword){
+            document.getElementById('lbltipAddedComment').innerHTML = validConfirmPassword
+            return;
+        }
+        if(!confirmPassword){
+            document.getElementById('lbltipAddedComment').innerHTML = 'confirm password is a required field';
+            return;
+        }
+
         axios.post('http://localhost:8080/api/auth/signup', newUser).then(res => {
             setToken(res.data.payload);
             localStorage.setItem('token', res.data.payload)
@@ -80,16 +109,16 @@ function Register(props) {
         setflagValidPassword(false)
         if (password.length > 0) setflagValidPassword(true)
 
-        // var valid = password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/);
-        // if(!valid){    
-        //     setValidPassword("password must containing at least 8 characters, 1 number, 1 upper and 1 lowercase [duplicate]");
-        //     setflagValidPassword(false)  
-        // }
-        // else{
+        var valid = password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/);
+        if(!valid){    
+            setValidPassword("password must containing at least 8 characters, 1 number, 1 upper and 1 lowercase [duplicate]");
+            setflagValidPassword(false)  
+        }
+        else{
             setNewUser({ ...newUser, password: password })
 
             setPassword(password);
-        // }
+        }
 
     }
 
@@ -99,7 +128,7 @@ function Register(props) {
         if (confirmPassword.length > 0) setflagValidConfirmPassword(true)
 
         if(confirmPassword != password){    
-            setValidConfirmPassword("The confirmPassword does not match אם פשדד'םרג");
+            setValidConfirmPassword("The confirmPassword does not match");
             setflagValidConfirmPassword(false)  
         }
         else{
@@ -144,9 +173,10 @@ function Register(props) {
                     <label id="lbltipAddedComment"></label>
                 </div>
                 <div className="new-candidate-buttons">
-                    <button className="button-ok" onClick={() => { addnewUserToApi(newUser) }}>Register</button>
 
-                    <Link to="/"><button className="button-cancel" >Cancel</button></Link>
+                        <button className="button-ok" onClick={() => { addnewUserToApi(newUser) }}>Register</button>
+
+                        <Link to="/"><button className="button-cancel" >Cancel</button></Link>
 
                 </div>
             </div>

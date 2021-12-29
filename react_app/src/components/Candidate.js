@@ -3,10 +3,8 @@ import './CSS.css';
 import OneCandidate from './OneCandidate'
 import axios from 'axios'
 
-function Candidate() {//props
+function Candidate() {
 
-    //Variable from parent
-    //const { candidatesList } = props;
     const [candidatesList, setCandidatesList] = useState([]);
 
     useEffect(() => {
@@ -14,6 +12,7 @@ function Candidate() {//props
     }, [])
 
     function getCandidates() {
+
       const token = localStorage.getItem('token')//JSON.parse(
       axios.get('http://localhost:8080/api/candidates', { headers: {"Authorization" : `Bearer ${token}`} }).then(res => {
         setCandidatesList(res.data.payload)

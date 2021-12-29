@@ -21,7 +21,18 @@ function Login(props) {
     const [token, setToken] = useState();
 
     function login(user) {
-        console.log(user)
+        if(!username){
+            document.getElementById('lbltipAddedComment').innerHTML = 'Username is a required field';
+            return;
+        }
+        if(!flagValidPassword){
+            document.getElementById('lbltipAddedComment').innerHTML = validPassword
+            return;
+        }
+        if(!password){
+            document.getElementById('lbltipAddedComment').innerHTML = 'Password is a required field'
+            return;
+        }
         axios.post('http://localhost:8080/api/auth/signin', user).then(res => {
             setToken(res.data.payload);
             localStorage.setItem('token', res.data.payload)
@@ -53,16 +64,16 @@ function Login(props) {
         setflagValidPassword(false)
         if (password.length > 0) setflagValidPassword(true)
 
-        // var valid = password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/);
-        // if(!valid){    
-        //     setValidPassword("password must containing at least 8 characters, 1 number, 1 upper and 1 lowercase [duplicate]");
-        //     setflagValidPassword(false)  
-        // }
-        // else{
+        var valid = password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/);
+        if(!valid){    
+            setValidPassword("password must containing at least 8 characters, 1 number, 1 upper and 1 lowercase [duplicate]");
+            setflagValidPassword(false)  
+        }
+        else{
             setUser({ ...user, password: password })
 
             setPassword(password);
-        // }
+        }
 
     }
 
@@ -71,6 +82,10 @@ function Login(props) {
             <div className="new-candidate-container">
             <label>Sign In</label>
                 <div className="new-candidate-inputs">
+                    <div className="new-candidate-input">
+                    If you already have an account 
+                    <Link to="/signup"> click here</Link>
+                    </div>
                     {/* Username */}
                     <div className="new-candidate-input">
                         <div>

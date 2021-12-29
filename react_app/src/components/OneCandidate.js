@@ -14,14 +14,14 @@ function OneCandidate(props) {
             </div>
             <div className="candidate-details" >
                 {/* name */}
-                <div className="candidate-name" >{candidate.first_name + candidate.last_name}</div>
+                <div className="candidate-name" >{candidate.first_name + ' ' + candidate.last_name}</div>
                 {/*job_title */}                
                 <div className="candidate-name">{candidate.job_title}</div>
             </div>
             <div className="new-candidate-buttons">
-                <Link to={{pathname: `${props.candidate.id}`}} state={{ candidate: candidate }}>
+                <Link to={{pathname: `${window.location.pathname === '/'?'candidates/':""}${props.candidate.id}`}} state={{ candidate: candidate }}>
                     <button className="button-ok">Profile</button>
-                </Link>
+                </Link> 
             </div>
 
         </div>
